@@ -1,16 +1,28 @@
-import { Controller, Get, Post, Body, UseGuards, Req } from '@nestjs/common';
-import { Param } from '@nestjs/common/decorators';
-import { AuthGuard } from '@nestjs/passport';
-import { Carona } from 'src/entities/carona.entity';
+import {
+    Controller,
+    Get,
+    Post,
+    Body,
+    UseGuards,
+    Req,
+    Param,
+} from '@nestjs/common';
+import { AuthService } from 'src/auth/auth.service';
+import { Public } from 'src/auth/decorator/public.decorator';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 // import { CaronaDto } from 'src/dtos/carona.dto';
 import { CaronaService } from 'src/services/carona.service';
-import { Like, MoreThanOrEqual } from 'typeorm';
+import { UsuarioService } from 'src/services/usuario.service';
+import { In, Like, MoreThanOrEqual } from 'typeorm';
 
 @Controller('carona')
 export class CaronaController {
-    constructor(private readonly caronaService: CaronaService) {}
+    constructor(
+        private readonly caronaService: CaronaService,
+        private usuarioService: UsuarioService,
+    ) {}
 
-    @UseGuards(AuthGuard('jwt'))
+    @UseGuards(JwtAuthGuard)
     @Post('')
     public async create(@Body() carona: any, @Req() req: any) {
         return await this.caronaService.create(carona, +req?.user?.id);
@@ -18,8 +30,6 @@ export class CaronaController {
 
     @Post('find')
     public async getAll(@Body() options: any) {
-        console.log(options);
-
         let _options: any = {};
         if (options.futuro) {
             _options.saidaHorario = MoreThanOrEqual(new Date());
@@ -50,13 +60,35 @@ export class CaronaController {
                     break;
             }
         }
+
+        console.log(options);
+        if (options.caronas) {
+            let usuario = await this.usuarioService.buscar({
+                email: options.caronas,
+            });
+            _options.motorista = usuario;
+        }
+        if (options.reservas) {
+            let usuario = await this.usuarioService.buscar({
+                email: options.reservas,
+            });
+            _options.passageiros = usuario;
+        }
+
         let caronas = await this.caronaService.find({
             where: _options,
             order: _order,
             relations: {
                 motorista: true,
+                passageiros: true,
             },
         });
+
+        if (options.vagas) {
+            return caronas.filter(
+                (carona) => 4 - carona.passageiros.length >= options.vagas,
+            );
+        }
         return caronas;
     }
 
@@ -68,19 +100,21 @@ export class CaronaController {
             },
             relations: {
                 motorista: true,
-                passageiros: true
+                passageiros: true,
             },
         });
         return carona;
     }
 
-    @UseGuards(AuthGuard('jwt'))
+    @UseGuards(JwtAuthGuard)
     @Post('reservar/:caronaId')
-    public async reservarCarona(@Req() req:any, @Param('caronaId') caronaId: string) {
+    public async reservarCarona(
+        @Req() req: any,
+        @Param('caronaId') caronaId: string,
+    ) {
         let carona = await this.caronaService.reservar(+caronaId, +req.user.id);
         return carona;
     }
-
 
     // @Post()
     // public async criar(@Body() body: CaronaDto): Promise<{ id: number }> {

@@ -25,6 +25,11 @@ export class UsuarioDto {
     email: string;
 
     @IsString()
+    @MaxLength(255)
+    @IsNotEmpty()
+    telefone?: string;
+
+    @IsString()
     @IsNotEmpty()
     senha: string;
 
@@ -50,6 +55,11 @@ export class UsuarioEditarDto {
     @IsEmail()
     @IsOptional()
     email?: string;
+
+    @IsString()
+    @MaxLength(255)
+    @IsOptional()
+    telefone?: string;
 
     @IsOptional()
     @Type(() => Motorista)

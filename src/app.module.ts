@@ -6,7 +6,6 @@ import { Usuario } from './entities/usuario.entity';
 import { Carona } from './entities/carona.entity';
 import { Endereco } from './entities/endereco.entity';
 import { AuthModule } from './auth/auth.module';
-import { UsuarioModule } from './modules/usuario.module';
 import { CaronaModule } from './modules/carona.module';
 
 @Module({
@@ -23,7 +22,6 @@ import { CaronaModule } from './modules/carona.module';
         }),
         TypeOrmModule.forFeature([Usuario, Carona, Endereco]),
         AuthModule,
-        UsuarioModule,
         CaronaModule,
     ],
     controllers: [AppController],

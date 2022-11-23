@@ -7,7 +7,10 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
-import { UsuarioModule } from 'src/modules/usuario.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Usuario } from 'src/entities/usuario.entity';
+import { Endereco } from 'src/entities/endereco.entity';
+import { UsuarioService } from 'src/services/usuario.service';
 
 @Module({
     imports: [
@@ -16,10 +19,10 @@ import { UsuarioModule } from 'src/modules/usuario.module';
             secret: jwtConstants.secret,
             signOptions: { expiresIn: jwtConstants.expiresIn },
         }),
-        forwardRef(() => UsuarioModule),
+        TypeOrmModule.forFeature([Usuario, Endereco])
     ],
-    providers: [AuthService, JwtStrategy],
-    exports: [AuthService],
+    providers: [AuthService, UsuarioService, JwtStrategy],
+    exports: [AuthService, UsuarioService],
     controllers: [AuthController],
 })
 export class AuthModule {}

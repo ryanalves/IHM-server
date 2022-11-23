@@ -33,6 +33,9 @@ export class Usuario {
     email: string;
 
     @Column()
+    telefone: string;
+
+    @Column()
     nomeCompleto: string;
 
     @Column()
