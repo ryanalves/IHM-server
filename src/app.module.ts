@@ -15,7 +15,7 @@ import { CaronaModule } from './modules/carona.module';
             host: '0.0.0.0',
             port: 3306,
             username: 'root',
-            password: 'root',
+            password: '',
             database: 'vaobora',
             entities: [Usuario, Carona, Endereco],
             synchronize: true,
