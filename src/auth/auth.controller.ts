@@ -8,8 +8,8 @@ import {
     Req,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { UsuarioDto, UsuarioEditarDto } from 'src/dtos/usuario.dto';
-import { UsuarioService } from 'src/services/usuario.service';
+import { UsuarioDto, UsuarioEditarDto } from '../dtos/usuario.dto';
+import { UsuarioService } from '../services/usuario.service';
 import { CredenciaisInvalidasException } from '../exceptions/credenciaisInvalidas.exception';
 import { AuthDto } from './auth.dto';
 import { AuthService } from './auth.service';

@@ -9,8 +9,8 @@ import {
     IsOptional,
     ValidateNested,
 } from 'class-validator';
-import { Endereco } from 'src/entities/endereco.entity';
-import { Motorista } from 'src/entities/usuario.entity';
+import { Endereco } from '../entities/endereco.entity';
+import { Motorista } from '../entities/usuario.entity';
 
 export class UsuarioDto {
     @IsString()

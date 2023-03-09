@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UsuarioDto, UsuarioEditarDto } from 'src/dtos/usuario.dto';
-import { Usuario } from 'src/entities/usuario.entity';
-import { RegistroExistenteException } from 'src/exceptions/registroexistente.exception';
+import { UsuarioDto, UsuarioEditarDto } from '../dtos/usuario.dto';
+import { Usuario } from '../entities/usuario.entity';
+import { RegistroExistenteException } from '../exceptions/registroexistente.exception';
 import { FindOptionsWhere, Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { Endereco } from 'src/entities/endereco.entity';
-import { RegistroNaoEncontradoException } from 'src/exceptions/registroNaoEncontrado.exception';
+import { Endereco } from '../entities/endereco.entity';
+import { RegistroNaoEncontradoException } from '../exceptions/registroNaoEncontrado.exception';
 
 @Injectable()
 export class UsuarioService {

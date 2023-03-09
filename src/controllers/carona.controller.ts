@@ -1,19 +1,9 @@
-import {
-    Controller,
-    Get,
-    Post,
-    Body,
-    UseGuards,
-    Req,
-    Param,
-} from '@nestjs/common';
-import { AuthService } from 'src/auth/auth.service';
-import { Public } from 'src/auth/decorator/public.decorator';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-// import { CaronaDto } from 'src/dtos/carona.dto';
-import { CaronaService } from 'src/services/carona.service';
-import { UsuarioService } from 'src/services/usuario.service';
-import { In, Like, MoreThanOrEqual } from 'typeorm';
+import { Controller, UseGuards } from '@nestjs/common';
+import { Get, Post, Body, Req, Param } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { CaronaService } from '../services/carona.service';
+import { UsuarioService } from '../services/usuario.service';
+import { Like, MoreThanOrEqual } from 'typeorm';
 
 @Controller('carona')
 export class CaronaController {
@@ -115,15 +105,4 @@ export class CaronaController {
         let carona = await this.caronaService.reservar(+caronaId, +req.user.id);
         return carona;
     }
-
-    // @Post()
-    // public async criar(@Body() body: CaronaDto): Promise<{ id: number }> {
-    //     try {
-    //         const carona = await this.caronaService.criar(body);
-    //         // console.log(body);
-    //         return { id: carona.id };
-    //     } catch (error) {
-    //         throw error;
-    //     }
-    // }
 }

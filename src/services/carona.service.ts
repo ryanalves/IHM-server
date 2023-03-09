@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Carona } from 'src/entities/carona.entity';
-import { Motorista, Usuario } from 'src/entities/usuario.entity';
-import { CaronaJaReservadaException } from 'src/exceptions/caronaJaReservada.exception';
-import { UsuarioMotoristaException } from 'src/exceptions/usuarioMotorista.exception';
+import { Carona } from '../entities/carona.entity';
+import { Motorista, Usuario } from '../entities/usuario.entity';
+import { CaronaJaReservadaException } from '../exceptions/caronaJaReservada.exception';
+import { UsuarioMotoristaException } from '../exceptions/usuarioMotorista.exception';
 import { FindManyOptions, Repository } from 'typeorm';
 
 @Injectable()
@@ -24,6 +24,8 @@ export class CaronaService {
     }
 
     create(carona: any, userId: number) {
+        if (!userId) throw new Error('motorista_nao_encontrado');
+        
         let caronaDoc = new Carona();
         caronaDoc.chegada = carona.chegada;
         caronaDoc.chegadaHorario = carona.chegadaHorario;
