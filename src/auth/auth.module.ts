@@ -8,9 +8,9 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Usuario } from 'src/entities/usuario.entity';
-import { Endereco } from 'src/entities/endereco.entity';
-import { UsuarioService } from 'src/services/usuario.service';
+import { Usuario } from '../entities/usuario.entity';
+import { Endereco } from '../entities/endereco.entity';
+import { UsuarioService } from '../services/usuario.service';
 
 @Module({
     imports: [
