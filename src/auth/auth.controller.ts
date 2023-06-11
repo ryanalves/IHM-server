@@ -25,13 +25,10 @@ export class AuthController {
 
     @Post('login')
     async login(@Body() body: AuthDto) {
-        console.log(body);
-
         const usuario = await this.authService.autenticar(
             body.email,
             body.senha,
         );
-        console.log(usuario);
         if (usuario) {
             return this.authService.login(usuario);
         } else {

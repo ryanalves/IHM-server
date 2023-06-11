@@ -47,7 +47,6 @@ export class CaronaService {
         let usuario = await this.usuarioRepository.findOne({
             where: { id: userId },
         });
-        console.log(carona);
         
         if (carona.motorista.id == userId) {
             throw new UsuarioMotoristaException();

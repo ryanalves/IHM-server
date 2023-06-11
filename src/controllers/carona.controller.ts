@@ -61,7 +61,6 @@ export class CaronaController {
             }
         }
 
-        console.log(options);
         if (options.caronas) {
             let usuario = await this.usuarioService.buscar({
                 email: options.caronas,
@@ -115,15 +114,4 @@ export class CaronaController {
         let carona = await this.caronaService.reservar(+caronaId, +req.user.id);
         return carona;
     }
-
-    // @Post()
-    // public async criar(@Body() body: CaronaDto): Promise<{ id: number }> {
-    //     try {
-    //         const carona = await this.caronaService.criar(body);
-    //         // console.log(body);
-    //         return { id: carona.id };
-    //     } catch (error) {
-    //         throw error;
-    //     }
-    // }
 }
